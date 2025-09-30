@@ -14,6 +14,7 @@ public class Card {
     private Long cardNumber;
     private LocalDate expiryDate;
     private String pinHash;
+    private int failedPin;
     @Enumerated(value = EnumType.STRING)
     private CardStatus cardStatus;
     @Enumerated(value = EnumType.STRING)

@@ -19,6 +19,10 @@ public class SecurityFilter {
        return argon2.hash(4, 65536, 3, pin);
     }
 
+    public boolean passwordDecoder(String dbPinHashed,String enteredPin){
+        return argon2.verify(dbPinHashed,enteredPin);
+    }
+
     public Long cardNumber(){
         Long value = generatedValue();
         return 12341234 + value;

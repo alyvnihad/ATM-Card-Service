@@ -15,17 +15,27 @@ public class CardController {
     private final CardService cardService;
 
     @PostMapping("register")
-    public void register(@RequestBody AccountRequest request){
+    public void register(@RequestBody AccountRequest request) {
         cardService.register(request.getPinHash(), request.getCurrency());
     }
 
     @GetMapping("read-card")
-    public Optional<Card> getCard(@RequestBody AccountRequest request){
+    public Optional<Card> getCard(@RequestBody AccountRequest request) {
         return cardService.getCard(request.getCardNumber());
     }
 
     @GetMapping("pin-check")
-    public boolean pinHashCheck(@RequestBody AccountRequest request){
+    public boolean pinHashCheck(@RequestBody AccountRequest request) {
         return cardService.pinHashCheck(request.getCardNumber(), request.getPinHash());
+    }
+
+    @PostMapping("block")
+    public void block(@RequestBody AccountRequest request) {
+        cardService.cardBlock(request.getCardNumber());
+    }
+
+    @PostMapping("unblock")
+    public void unBlock(@RequestBody AccountRequest request) {
+        cardService.cardUnBlock(request.getCardNumber());
     }
 }

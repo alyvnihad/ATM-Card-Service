@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import java.time.LocalDate;
+import java.util.Optional;
 
 
 @Service
@@ -43,5 +44,10 @@ public class CardService {
         accountRequest.setCurrency(currency);
 
         restTemplate.postForEntity(accountUrl + "/register", accountRequest, Void.class);
+    }
+
+    public Optional<Card> getCard(Long number) {
+        Card card = cardRepository.findByCardNumber(number);
+        return cardRepository.findByIdAndCardNumber(card.getId(), card.getCardNumber());
     }
 }

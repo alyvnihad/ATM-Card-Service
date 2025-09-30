@@ -23,4 +23,9 @@ public class CardController {
     public Optional<Card> getCard(@RequestBody AccountRequest request){
         return cardService.getCard(request.getCardNumber());
     }
+
+    @GetMapping("pin-check")
+    public boolean pinHashCheck(@RequestBody AccountRequest request){
+        return cardService.pinHashCheck(request.getCardNumber(), request.getPinHash());
+    }
 }

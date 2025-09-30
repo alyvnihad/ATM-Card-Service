@@ -54,15 +54,15 @@ public class CardService {
     public boolean pinHashCheck(Long cardNumber, String pin) {
         Card card = cardRepository.findByCardNumber(cardNumber);
 
-        if(card.getCardStatus() == CardStatus.Block){
+        if (card.getCardStatus() == CardStatus.Block) {
             return false;
         }
 
         boolean decoder = filter.passwordDecoder(card.getPinHash(), pin);
-        if(!decoder){
+        if (!decoder) {
             card.setFailedPin(card.getFailedPin() + 1);
 
-            if(card.getFailedPin()>=3){
+            if (card.getFailedPin() >= 3) {
                 card.setCardStatus(CardStatus.Block);
             }
             cardRepository.save(card);
@@ -72,5 +72,26 @@ public class CardService {
         card.setFailedPin(0);
         cardRepository.save(card);
         return true;
+    }
+
+    public void cardBlock(Long number) {
+        try {
+            Card card = cardRepository.findByCardNumber(number);
+            card.setCardStatus(CardStatus.Block);
+            cardRepository.save(card);
+        } catch (Exception e) {
+            throw new RuntimeException("Error line 83");
+        }
+    }
+
+    public void cardUnBlock(Long number) {
+        try {
+            Card card = cardRepository.findByCardNumber(number);
+            card.setCardStatus(CardStatus.Unblock);
+            card.setFailedPin(0);
+            cardRepository.save(card);
+        } catch (Exception e) {
+            throw new RuntimeException("Error line 94");
+        }
     }
 }

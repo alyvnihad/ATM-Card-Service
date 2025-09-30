@@ -50,4 +50,27 @@ public class CardService {
         Card card = cardRepository.findByCardNumber(number);
         return cardRepository.findByIdAndCardNumber(card.getId(), card.getCardNumber());
     }
+
+    public boolean pinHashCheck(Long cardNumber, String pin) {
+        Card card = cardRepository.findByCardNumber(cardNumber);
+
+        if(card.getCardStatus() == CardStatus.Block){
+            return false;
+        }
+
+        boolean decoder = filter.passwordDecoder(card.getPinHash(), pin);
+        if(!decoder){
+            card.setFailedPin(card.getFailedPin() + 1);
+
+            if(card.getFailedPin()>=3){
+                card.setCardStatus(CardStatus.Block);
+            }
+            cardRepository.save(card);
+            return false;
+        }
+
+        card.setFailedPin(0);
+        cardRepository.save(card);
+        return true;
+    }
 }

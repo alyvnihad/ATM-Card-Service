@@ -2,6 +2,7 @@ package org.example.cardservice.service;
 
 import lombok.RequiredArgsConstructor;
 import org.example.cardservice.dto.AccountRequest;
+import org.example.cardservice.dto.AccountResponse;
 import org.example.cardservice.model.Card;
 import org.example.cardservice.model.CardStatus;
 import org.example.cardservice.model.PaymentNetwork;
@@ -26,7 +27,7 @@ public class CardService {
     @Value("${account.service.url}")
     private String accountUrl;
 
-    public void register(String pin, String currency) {
+    public AccountResponse register(String pin, String currency) {
         String Pin = filter.passwordEncoder(pin);
         Long cardNumber = filter.cardNumber();
         PaymentNetwork paymentNetwork = filter.generatedPaymentNetwork();
@@ -43,7 +44,11 @@ public class CardService {
         accountRequest.setCardNumber(cardNumber);
         accountRequest.setCurrency(currency);
 
+        AccountResponse accountResponse = new AccountResponse();
+        accountResponse.setCardNumber(cardNumber);
+
         restTemplate.postForEntity(accountUrl + "/register", accountRequest, Void.class);
+        return accountResponse;
     }
 
     public Optional<Card> getCard(Long number) {

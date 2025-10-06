@@ -3,8 +3,6 @@ package org.example.cardservice.dto;
 import lombok.Data;
 
 @Data
-public class AccountRequest {
+public class AccountResponse {
     private Long cardNumber;
-    private String pin;
-    private String Currency;
 }

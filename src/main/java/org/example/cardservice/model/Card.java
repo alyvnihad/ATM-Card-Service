@@ -13,7 +13,6 @@ public class Card {
     private Long id;
     private Long cardNumber;
     private LocalDate expiryDate;
-    //cvv kodda lazimdi
     private String pinHash;
     private int failedPin;
     @Enumerated(value = EnumType.STRING)

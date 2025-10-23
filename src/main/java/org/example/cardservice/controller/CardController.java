@@ -2,7 +2,7 @@ package org.example.cardservice.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.example.cardservice.dto.AccountRequest;
-import org.example.cardservice.dto.AccountResponse;
+import org.example.cardservice.dto.CardResponse;
 import org.example.cardservice.model.Card;
 import org.example.cardservice.service.CardService;
 import org.springframework.web.bind.annotation.*;
@@ -16,8 +16,8 @@ public class CardController {
     private final CardService cardService;
 
     @PostMapping("/register")
-    public AccountResponse register(@RequestBody AccountRequest request) {
-        return cardService.register(request.getPin(), request.getCurrency());
+    public CardResponse register(@RequestBody AccountRequest request) {
+        return cardService.register(request);
     }
 
     @GetMapping("/read-card")

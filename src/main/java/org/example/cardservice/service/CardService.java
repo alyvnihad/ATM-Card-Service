@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.example.cardservice.dto.AccountRequest;
 import org.example.cardservice.dto.AccountResponse;
 import org.example.cardservice.dto.CardResponse;
+import org.example.cardservice.exception.ConflictException;
 import org.example.cardservice.model.Card;
 import org.example.cardservice.model.CardStatus;
 import org.example.cardservice.model.PaymentNetwork;
@@ -108,7 +109,7 @@ public class CardService {
             card.setCardStatus(CardStatus.Block);
             cardRepository.save(card);
         } catch (Exception e) {
-            throw new RuntimeException("Error line 83");
+            throw new ConflictException("Card Block Error");
         }
     }
 
@@ -120,7 +121,7 @@ public class CardService {
             card.setFailedPin(0);
             cardRepository.save(card);
         } catch (Exception e) {
-            throw new RuntimeException("Error line 94");
+            throw new ConflictException("Card UnBlock Error");
         }
     }
 }

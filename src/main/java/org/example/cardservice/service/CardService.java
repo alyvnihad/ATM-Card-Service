@@ -1,5 +1,6 @@
 package org.example.cardservice.service;
 
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.example.cardservice.dto.AccountRequest;
 import org.example.cardservice.dto.AccountResponse;
@@ -31,6 +32,7 @@ public class CardService {
     private String accountUrl;
 
     // Create a new card and register related account
+    @Transactional
     public CardResponse register(AccountRequest request) {
 
         // Encode pin
@@ -103,6 +105,7 @@ public class CardService {
     }
 
     // Block card (admin only)
+    @Transactional
     public void cardBlock(Long number) {
         try {
             Card card = cardRepository.findByCardNumber(number);
@@ -114,6 +117,7 @@ public class CardService {
     }
 
     // Unblock card (admin only)
+    @Transactional
     public void cardUnBlock(Long number) {
         try {
             Card card = cardRepository.findByCardNumber(number);
